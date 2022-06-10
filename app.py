@@ -19,7 +19,7 @@ app = Flask(__name__)
 ckeditor = CKEditor(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ennynoah.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://axwqvbezkgisrr:d5a9914dc56945db6d0b29f23e07708061406bd05c69ddc246a1aa81862eb689@ec2-52-204-195-41.compute-1.amazonaws.com:5432/da7d9hockuhno'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://axwqvbezkgisrr:d5a9914dc56945db6d0b29f23e07708061406bd05c69ddc246a1aa81862eb689@ec2-52-204-195-41.compute-1.amazonaws.com:5432/da7d9hockuhno'
 
 app.config['SECRET_KEY'] = "cairocoders-ednalan"
 
