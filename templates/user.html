@@ -1,0 +1,62 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+
+
+	{% for message in get_flashed_messages() %}
+
+		<div class="alert alert-success alert-dismissible fade show" role="alert">
+			Hey {{ name }} - {{ message }}
+	  		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+
+	{% endfor %}
+
+	
+
+			<h2> Hello {{ current_user.name | title}} </h1>
+			
+			<br/>
+			<br/>
+
+			<div class="card">
+				<div class="card-header">
+					<h3><u> Profile Details : </u></h4>
+				</div>
+
+				<div class="card-body">
+
+					<br/>
+
+					<p class="card-text">
+						<strong> Name : </strong> {{ current_user.name }} <br/>
+						<strong>UserName : </strong> {{ current_user.username }} <br/>
+						<strong> User Id : </strong> {{ current_user.id }} <br/>
+						<strong>Email : </strong> {{ current_user.email }} <br/>
+						<strong> Date Joined : </strong> {{ current_user.date_added }} <br/>
+
+						<strong> Profile Pic : </strong> {{ current_user.profile_pic }} <br/>
+						<br/>
+						<br/>
+						<strong><small>About: </strong> {{ current_user.about_author}} </small><br/>
+						
+						<br/>
+						<br/>
+
+					</p>
+				</div>
+			</div>
+			
+
+			<table class="table table-hover table-bordered table-striped">
+
+				{% for our_user in our_users %}
+				<tr>
+					<td>{{our_user.id}}. Name : <a href= "{{ url_for('update', id=our_user.id) }}"> {{ our_user.name }}</a> <br/> - User Name : {{ our_user.username }} <br/> - Email : {{ our_user.email}} <br/> - PW : {{ our_user.password_hash }} <a href= "{{ url_for('delete', id=our_user.id) }}">Delete</a></td>
+				</tr>
+
+				{% endfor %}
+
+			</table>
+
+{% endblock %}

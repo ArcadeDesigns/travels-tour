@@ -1,0 +1,86 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+
+
+{% for message in get_flashed_messages() %}
+
+	<div class="alert alert-success alert-dismissible fade show" role="alert">
+		Hey {{ name }} - {{ message }}
+  		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+
+{% endfor %}
+
+<h1><small> {{ ask.title | upper }} </small></h1>
+<hr/>
+<br/>
+<br/>
+
+	<div class="shadow p-3 mb-5 bg-body rounded">
+		{% if ask.file %}
+			<img src="{{url_for ('static', filename='images/' + ask.file)}}" width= "100%" align=centre>
+		{% else %}
+			<img src="{{url_for ('static', filename='images/defaultuser.jpg')}}" alt="Profile Image Here" width= "50%" align=center>
+		{% endif %}
+		<br/>
+	</div>
+
+	<div class="shadow p-3 mb-5 bg-body rounded">
+		
+		<h2>{{ ask.title | title }}</h2>
+		<br/>
+	
+		<small> By : {{ ask.poster.name }}</small> 
+		<br/>
+		{{ ask.date_posted }}
+		<br/>
+		<br/>
+
+		{{ ask.content | safe }}
+		<br/>
+		<br/>
+
+		<div class=" card mb-3">
+			<div class=" row no-gutters">
+				<div class="col-md-2">
+					{% if ask.poster.profile_pic %}
+						<img src="{{url_for ('static', filename='images/' + ask.poster.profile_pic)}}" width= "50%" align=left>
+					{% else %}
+						<img src="{{url_for ('static', filename='images/defaultuser.jpg')}}" alt="Profile Image Here" width= "50%" align=left>
+					{% endif %}
+				</div>
+
+				<div class="col-md-10">
+					<div class="card-body">
+						<h4 class="card-title"> {{ ask.poster.name }} </h4>
+
+						<p class="card-text">
+							{% if ask.poster.about_author %}
+								 <h3><small> Details : {{ ask.poster.about_author }} </h3></small>
+							{% else %}
+								Author as no about Profile yet
+							{% endif %}
+							<br/>
+							<br/>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<br/>
+
+		
+	<a href="{{ url_for('asks') }}" class="btn btn-outline-success btn-sm"> Back To Questions </a>
+
+	{% if ask.poster_id == current_user.id %}
+
+	<a href="{{ url_for('edit_ask', id=ask.id) }}" class="btn btn-outline-secondary btn-sm"> Edit Question </a>
+
+	<a href="{{ url_for('delete_ask', id=ask.id) }}" class="btn btn-outline-danger btn-sm"> Delete Question </a>
+
+	{% endif %}
+
+{% endblock %}

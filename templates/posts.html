@@ -1,0 +1,78 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+
+
+{% for message in get_flashed_messages() %}
+
+	<div class="alert alert-success alert-dismissible fade show" role="alert">
+		Hey {{ name }} - {{ message }}
+  		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+
+{% endfor %}
+
+		<div class="home-text container">
+          <h2 class="home-title logo"> Latest <span> Travel News </span></h2>
+          <span class="home-subtitle"> Travel and Tourism </span>
+          <div class="shadow p-3 mb-5 bg-dark rounded">
+	          <p>
+	          	Enny Noah Travels and Tourism Agency is always available to make you dreams of visiting a country of choice, either for Educational Purposes or Vacation a reality. It's your dream we make it come through. All your Questions and yarn for a greater experience are with response specifically targetted to answer all your Travel related enquiries, all you need to do is create an Account with us, and ask your Question, wait a while and get your answers.
+	          </p>
+	      </div>
+        </div>
+
+<h1>
+	<center>
+			VIEW <span> LATEST NEWS UPDATE... </span> 
+	</center>
+</h1>
+
+<hr/>
+
+<br/>
+
+<br/>
+
+{% for post in posts %}
+	<div class="shadow p-3 mb-5 bg-body rounded">
+		<div class="row">
+			<div class="col-6">
+				{% if post.file %}
+					<img src="{{url_for ('static', filename='images/' + post.file)}}" width= "100%" align=centre>
+				{% else %}
+					<img src="{{url_for ('static', filename='images/defaultuser.jpg')}}" alt="Profile Image Here" width= "100%" align=center>
+				{% endif %}
+			</div>
+
+			<div class="col-6" >
+				<h2>{{ post.title | title }}</h2>
+				<br/>
+				<small> By : {{ post.poster.name }}</small>
+				<br/>
+				{{ post.date_posted }}
+				<br/>
+				<br/>
+				{{ post.slug | safe | title }}
+				<br/>
+				<br/>
+
+				{% if post.poster.about_author %}
+					<h3><small> Details :</h3> {{ post.poster.about_author }} </small>
+				{% endif %}
+				<br/>
+				<br/>
+
+				<a href="{{ url_for('post', id=post.id) }}" class="btn btn-outline-secondary btn-sm"> View Post </a>
+
+				{% if post.poster_id == current_user.id or current_user.id == 1 %}
+					<a href="{{ url_for('edit_post', id=post.id) }}" class="btn btn-outline-success btn-sm"> Edit Post </a>
+					<a href="{{ url_for('delete_post', id=post.id) }}" class="btn btn-outline-danger btn-sm"> Delete Post </a>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% endfor%}
+
+
+{% endblock %}

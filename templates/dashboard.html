@@ -1,0 +1,72 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+
+
+	{% for message in get_flashed_messages() %}
+
+		<div class="alert alert-success alert-dismissible fade show" role="alert">
+			Hey {{ name }} - {{ message }}
+	  		<button type="bu tton" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+
+	{% endfor %}
+
+			<h2> Dashboard </h2>
+			<br/><br/>
+
+		<div class="card">
+			<div class="card-header">
+			    <h2><u> {{ current_user.name | title }} </u></h4>
+			  </div>
+			  <div class="card-body">
+			    <h3 class="card-title"> Profile and Details</h4>
+			    <br/>
+			    <div class="card-text">
+			    	<div class="container">
+			    		<div class="row">
+			    			<div class="col-8">
+			    				<strong> Name : </strong> {{ current_user.name}} <br/>
+			    				<strong>UserName : </strong> {{ current_user.username}} <br/>
+			    				<strong> User Id : </strong> {{ current_user.id}} <br/>
+			    				<strong>Email : </strong> {{ current_user.email}} <br/>
+			    				<strong> Date Joined : </strong> {{ current_user.date_added}} <br/>
+			  
+			    				<a href= "{{ url_for('update', id=current_user.id) }}" class="btn btn-outline-secondary btn-sm"> Update Profile </a>
+
+			    				<a href=" {{ url_for('logout') }} " class="btn btn-outline-success btn-sm"> Logout </a>
+
+			    				<a href= "{{ url_for('delete', id=current_user.id) }}" class= "btn btn-outline-danger btn-sm">Delete</a>
+
+			    				<br/>
+			    				<br/>
+			    			</div>
+
+			    			<div class="col-4">
+
+			    				{% if current_user.profile_pic %}
+
+			    					<img src="{{url_for ('static', filename='images/' + current_user.profile_pic)}}" width= "100%" align=right>
+
+			    				{% else %}
+
+			    					<img src="{{url_for ('static', filename='images/defaultuser.jpg')}}" alt="Profile Image Here" width= "100%" align=right>
+
+			    				{% endif %}
+
+			    			</div>
+			    		</div>
+			    	</div>
+			    	
+			    	<div class="card-body">
+			    		<div class="card-text">
+			    			<strong>About Author : </strong> {{ current_user.about_author}} <br/>
+			    		</div>
+			    	</div>
+			    </div>
+			</div>
+		</div>
+		<br/>
+	<br/>
+
+{% endblock %}

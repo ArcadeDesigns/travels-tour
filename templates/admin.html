@@ -1,0 +1,167 @@
+
+{% extends 'base.html' %} 
+
+{% block content %}
+
+	<div class="container">
+		<center><h1 class="logo"> Admini<span>trator</span> </h1></center>
+		<div class="row">
+			<div class="col-md-8">
+				<div class="shadow p-3 mb-5 bg-dark rounded">
+
+					<br/>
+
+					<center><h3 class="logo"> Monitor Post and Setup <span> Rules and Regulations here.. </span></h3></center>
+
+					<br/>
+
+		            <li class="nav-item">
+		              <a class="btn btn-outline-success btn-sm" href="{{ url_for('add_post') }}">Add Post</a>
+		            </li>
+
+					<br/>
+					<br/>
+
+					{% for our_user in our_users %}
+
+						<div class="card">
+							<div class="card-header">
+								<h2><u> {{our_user.id}} <a href= "{{ url_for('update', id=our_user.id) }}"> Name: {{ our_user.name | title }} </a></u></h4>
+									<div class="card-body">
+										<h3 class="card-title"> Profile and Details</h3>
+										<br/>
+										<div class="card-text">
+											<div class="container">
+												<div class="row">
+													<div class="col-8">
+									    				<strong> Name : </strong> {{ our_user.name }} <br/>
+								    					<strong> UserName : </strong> {{ our_user.username}} <br/>
+								    					<strong> User Id : </strong> {{ our_user.id}} <br/>
+								    					<strong> Email : </strong> {{ our_user.email}} <br/>
+								    					<strong> Date Joined : </strong> {{ our_user.date_added}} <br/>
+								    					<strong> Password : </strong> {{ our_user.password_hash}} <br/>
+								    					
+									    				<br/>
+
+								    					<a href= "{{ url_for('update', id=our_user.id) }}" class="btn btn-outline-secondary btn-sm"> Update Profile </a>
+
+								    					<a href= "{{ url_for('delete', id=our_user.id) }}" class= "btn btn-outline-danger btn-sm">Delete</a>
+
+									    				<br/>
+								    				</div>
+
+								    				<div class="col-4">
+
+									    				{% if our_user.profile_pic %}
+
+									    					<img src="{{url_for ('static', filename='images/' + our_user.profile_pic)}}" width= "100%" align=right>
+
+									    				{% else %}
+
+									    					<img src="{{url_for ('static', filename='images/defaultuser.jpg')}}" alt="Profile Image Here" width= "100%" align=right>
+
+									    				{% endif %}
+
+									    			</div>
+								    			</div>
+								    		</div>
+								    	</div>
+								    </div>
+								    <br/>
+								    <br/>
+								    <br/>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+			</div>
+
+			<div class="col-md-4">
+				<section class="post-content post-container">
+					<div class="shadow p-3 mb-12 bg-dark rounded">
+
+						{% for message in get_flashed_messages() %}
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								Hey {{ name }} - {{ message }}
+								<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+							</div>
+						{% endfor %}
+
+						<h1 class="logo"><center> Latest <span> Questions ... </span></center></h1>
+
+		                <hr/>
+		                <br/>
+		                <br/>
+		                {% for post in posts %}
+		                  <div class="card text-center">
+		                    <div class="card-header">
+		                      <small> By : {{ post.poster.name }}</small>
+
+		                      <br/>
+
+		                      {% if post.poster.about_author %}
+
+		                        <h3><small> Author Details :</h3> {{ post.poster.about_author }} </small>
+		                      {% endif %}
+		                    </div>
+
+		                    <div class="card-body">
+		                      <div class="shadow p-3 mb-5 bg-body rounded">
+		                        <h5 class="card-title"> Title: {{ post.title | title }}</h5>
+		                      </div>
+
+		                      <p class="card-text"> Summary: {{ post.slug | safe | title }}</p>
+
+		                      <a href="{{ url_for('post', id=post.id) }}" class="btn btn-outline-secondary btn-sm"> View Post </a>
+
+		                      {% if post.poster_id == current_user.id or current_user.id == 1 %}
+		                        <a href="{{ url_for('edit_post', id=post.id) }}" class="btn btn-outline-success btn-sm"> Edit Post </a>
+		                        <a href="{{ url_for('delete_post', id=post.id) }}" class="btn btn-outline-danger btn-sm"> Delete Post </a>
+		                      {% endif %}
+		                    </div>
+
+		                    <div class="card-footer text-muted">
+		                      Date and Time: {{ post.date_posted }}
+		                    </div>
+		                  </div>
+		                    <br/>
+		                    <br/>
+		                    <br/>
+		                {% endfor %}
+
+		                {% for ask in asks %}
+		                	<div class="card text-center">
+		                		<div class="card-body">
+		                			<div class="shadow p-3 mb-5 bg-body rounded">
+		                				<h5 class="card-title"> Title: {{ ask.title | title }}</h5>
+		                			</div>
+		                		</div>
+		                	</div>
+
+		                	<div class="card-footer text-muted">
+		                		Date and Time: {{ ask.date_posted }}
+		                	</div>
+		                    <br/>
+		                    <a href="{{ url_for('ask', id=ask.id) }}" class="btn btn-outline-secondary btn-sm"> View Questions </a>
+
+							{% if ask.poster_id == current_user.id or current_user.id == 1 %}
+								<a href="{{ url_for('delete_ask', id=ask.id) }}" class="btn btn-outline-danger btn-sm"> Delete Questions </a>
+							{% endif %}
+		                {% endfor %}
+		            </div>
+		        </section>
+			</div>
+		</div>			    	
+	</div>
+
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+
+{% endblock %}

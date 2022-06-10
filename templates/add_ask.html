@@ -1,0 +1,91 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+
+
+{% for message in get_flashed_messages() %}
+
+	<div class="alert alert-success alert-dismissible fade show" role="alert">
+		Hey {{ name }} - {{ message }}
+  		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" ></button>
+	</div>
+
+{% endfor %}	
+
+
+	{% if current_user.is_authenticated %}
+		<div class="container">
+			<!----Home----->
+			<section class="home" id="home">
+				<div class="home-text container">
+					<h2 class="home-title logo"> EnnyNoah GlobalTech <span> <br/> Travels and Tour. </span></h2>
+				</div>
+			</section>
+			<br/>
+			<br/>
+
+			<h1 class='logo'><center>Ask a <span>Question and Get the Answer</span></center></h1>
+			<br/>
+			<div class="shadow p-3 mb-5 bg-body rounded">
+				<h2 class="logo"> How to Make a Post</h2>
+				<p>
+					This system uses a Rich Editor CKEditior. It allows users to edit and format text, adding Images to text. To make a post, fill in the required sections and add the necessary information, afterward, click on the submit button. If you choose to add an Image to your post to support it, simply click on the Image Icon and add the URL link to the post, adjust the size to fit into it. The maximum image size is “250 X 250”, anything other than that will be too large, and make sure to give an H and V spacing of “10” respectively, then finally, select the position of the Image, either Left or Right.
+				</p>
+				<p>
+					CKEditor is a rich text service provider met to make text formatting and editing easy, you can choose the header style, and Font using the Editor with special image adding features. However to use the Upload function in the CKEditor, please contact the service or user for more Information.
+				</p>
+			</div>
+
+			<div class="shadow p-3 mb-5 bg-body rounded">
+				<form method="POST" type='file' name='file' action="" enctype="multipart/form-data">
+
+					{{ form.hidden_tag() }}
+
+
+					{{ form.title.label (class="form-label") }}
+
+					{{ form.title(class="form-control") }}
+
+					<br/>
+
+					{{ form.slug.label (class="form-label") }}
+
+					{{ form.slug(class="form-control") }}
+
+					<br/>
+
+					{{ form.file.label (class="form-label") }}
+
+					<input type="file" name="file" action="/" class="form-control" autocomplete="off">
+
+					<br/>
+
+					{{ form.content.label (class="form-label") }}
+
+					{{ form.content(class="form-control", rows="15") }}
+
+					<br/>
+
+
+					{{ form.submit(class="btn btn-secondary") }}
+
+
+				</form>
+
+				{{ ckeditor.load() }}
+	 			{{ ckeditor.config(name='content') }}
+
+			</div>
+		</div>
+
+	{% else %}
+	<div class="shadow p-3 mb-5 bg-body rounded">
+		<h2> You Must Be Logged In... </h2>
+		<p> To gain Access, Login or click on the link below to sign up, If you do not have an Account... </p>
+		<br/>
+		<a href="{{ url_for('login') }}" class="btn btn-outline-secondary btn-sm"> Login Here </a> 
+		<a href="{{ url_for('add_user') }}" class="btn btn-outline-secondary btn-sm"> Register an Account </a> 
+	</div>
+	{% endif%}
+
+{% endblock %}
