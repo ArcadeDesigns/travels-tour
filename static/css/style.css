@@ -23,6 +23,16 @@
     background: var(--second-color);
 }
 /*home*/
+.header{
+    width: 100%;
+    height: 80vh;
+    background-image: linear-gradient(to top, rgba(253, 253, 253, 0.534)50%,rgba(255, 255, 255, 0)50%), url(ennynoah9.jpg);
+    background-position: bottom;
+    background-size: cover;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;  
+}
 .home {
     width: 100%;
     min-height: 440px;
